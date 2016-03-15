@@ -1,6 +1,7 @@
 package org.jboss.netty.example.discard;
 
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
@@ -12,8 +13,13 @@ public class DiscardServerHandler extends SimpleChannelHandler {
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
 		ChannelBuffer buf = (ChannelBuffer) e.getMessage();
-		System.out.println((char) buf.readByte());
-		System.out.flush();
+		//System.out.println((char) buf.readByte());
+		//System.out.flush();
+		//buf.writeByte(buf.readByte());
+		
+		//Channel ch = ctx.getChannel();
+		Channel ch = e.getChannel();
+		ch.write(e.getMessage());
 	}
 
 	@Override
