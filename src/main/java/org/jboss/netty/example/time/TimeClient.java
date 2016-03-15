@@ -41,7 +41,13 @@ public class TimeClient {
 		
 		bootstrap.setOption("child.tcpNoDelay", true);
 		bootstrap.setOption("child.keepAlive", true);
-		bootstrap.connect(new InetSocketAddress(host, port));
+		ChannelFuture f = bootstrap.connect(new InetSocketAddress(host, port));
+		f.awaitUninterruptibly();
+		if (!f.isSuccess()){
+			f.getCause().printStackTrace();
+		}
+		f.getChannel().getCloseFuture().awaitUninterruptibly();
+		factory.releaseExternalResources();
 	}
 
 }

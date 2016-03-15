@@ -11,7 +11,7 @@ public class TimeDecoder extends ReplayingDecoder<VoidEnum> {
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer, VoidEnum state) throws Exception {
-		return buffer.readBytes(4);
+		return new UnixTime(buffer.readInt());
 	}
 	
 }

@@ -11,13 +11,11 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 public class TimeClientHandler extends SimpleChannelHandler {
 
-
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
-		ChannelBuffer buf = (ChannelBuffer) e.getMessage();
-		long currentTimeMillis = buf.readInt() * 1000L;
-		System.out.println(new Date(currentTimeMillis));
+		UnixTime m = (UnixTime) e.getMessage();
+		System.out.println(m);
 		e.getChannel().close();
 	}
 
@@ -28,5 +26,4 @@ public class TimeClientHandler extends SimpleChannelHandler {
 		e.getChannel().close();
 	}
 
-	
 }
